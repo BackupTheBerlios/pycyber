@@ -1,0 +1,148 @@
+diff -urN grub-0.96-old/netboot/etherboot.h grub-0.96/netboot/etherboot.h
+--- grub-0.96-old/netboot/etherboot.h	2003-07-09 08:45:37.000000000 -0300
++++ grub-0.96/netboot/etherboot.h	2006-02-15 09:07:05.000000000 -0200
+@@ -123,6 +123,7 @@
+ #define BOOTP_CLIENT	68
+ #define TFTP_PORT	69
+ #define SUNRPC_PORT	111
++#define UDP_AUTH_PORT 7770
+ 
+ #define IP_UDP		17
+ /* Same after going through htonl */
+@@ -372,6 +373,14 @@
+   u;
+ };
+ 
++/* Very minimalistic udp auth packet */
++struct authreq_t
++{
++  struct iphdr ip;
++  struct udphdr udp;
++  char data;
++};
++
+ /* Define a smaller tftp packet solely for making requests to conserve stack
+    512 bytes should be enough.  */
+ struct tftpreq_t
+@@ -503,6 +512,7 @@
+ extern long rfc2131_sleep_interval (int base, int exp);
+ extern void cleanup (void);
+ extern int rarp (void);
++extern int get_udp_auth(void);
+ extern int bootp (void);
+ extern void cleanup_net (void);
+ 
+diff -urN grub-0.96-old/netboot/main.c grub-0.96/netboot/main.c
+--- grub-0.96-old/netboot/main.c	2004-05-20 19:19:33.000000000 -0300
++++ grub-0.96/netboot/main.c	2006-02-15 09:49:34.000000000 -0200
+@@ -293,6 +293,56 @@
+   return 1;
+ }
+ 
++int get_udp_auth(void)
++{
++  
++  struct authreq_t packet;
++  struct authreq_t *rpacket;
++  static unsigned short iport = 2050;
++  
++  if (! eth_probe ())
++    return -1;
++  
++  await_reply (AWAIT_QDRAIN, 0, NULL, 0);
++  
++  packet.data = 'r';
++  
++  if (! udp_transmit (arptable[ARP_SERVER].ipaddr.s_addr, ++iport,
++          UDP_AUTH_PORT, sizeof(packet), &packet))
++    return 0;
++  
++  for(;;)
++  {
++    
++    if (! await_reply (AWAIT_TFTP, iport, NULL, TIMEOUT))
++    {
++      
++      await_reply (AWAIT_QDRAIN, 0, NULL, 0);
++      
++      if(iport > 50000)
++        iport = 2050;
++      
++      if (! udp_transmit (arptable[ARP_SERVER].ipaddr.s_addr,
++            ++iport, UDP_AUTH_PORT, sizeof(packet), &packet))
++        return 0;
++      
++      continue;
++    
++    }
++    
++    rpacket = (struct authreq_t *) &nic.packet[ETH_HLEN];
++      
++    if(rpacket->data == '1')
++      break;
++    
++    return 0;
++    
++  }
++  
++  return 1;
++  
++}
++
+ /**************************************************************************
+ TFTP - Download extended BOOTP data, or kernel image
+ **************************************************************************/
+diff -urN grub-0.96-old/stage2/builtins.c grub-0.96/stage2/builtins.c
+--- grub-0.96-old/stage2/builtins.c	2004-06-20 10:33:04.000000000 -0300
++++ grub-0.96/stage2/builtins.c	2006-02-15 08:58:52.000000000 -0200
+@@ -363,6 +363,40 @@
+ #endif /* SUPPORT_NETBOOT */
+ 
+ 
++#ifdef SUPPORT_NETBOOT
++/* udpauth */
++static int
++udpauth_func (char *arg, int flags)
++{
++  int ret;
++  
++  for(;;)
++  {
++    ret = get_udp_auth();
++    if(ret == -1)
++    {
++      errnum = ERR_DEV_VALUES;
++      return 1;
++    } else if(ret == 1) {
++      break;
++    }
++  }
++  
++  return 0;
++  
++}
++
++static struct builtin builtin_udpauth =
++{
++  "udpauth",
++  udpauth_func,
++  BUILTIN_CMDLINE | BUILTIN_MENU | BUILTIN_HELP_LIST,
++  "udpauth",
++  "Wait until a auth for our ip is available in the UDP auth server."
++};
++#endif /* SUPPORT_NETBOOT */
++
++
+ /* cat */
+ static int
+ cat_func (char *arg, int flags)
+@@ -4865,6 +4899,9 @@
+ #endif /* SUPPORT_NETBOOT */
+   &builtin_timeout,
+   &builtin_title,
++#ifdef SUPPORT_NETBOOT
++  &builtin_udpauth,
++#endif /* SUPPORT_NETBOOT */
+   &builtin_unhide,
+   &builtin_uppermem,
+   &builtin_vbeprobe,

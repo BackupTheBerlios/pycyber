@@ -1,0 +1,12 @@
+* Compiling pycyclient.exe
+
+$ i386-mingw32msvc-gcc -Os main.c -o pycyclient.exe -lwsock32 -mwindows
+$ strip pycyclient.exe
+
+* Patching pycyclient.exe for a port and a server ip address
+
+$ python setup.py Shutdown-Port Server-IP
+
+* Optional: compressing the executable with UPX
+
+$ upx pycyclient.exe

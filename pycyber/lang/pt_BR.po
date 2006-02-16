@@ -1,0 +1,139 @@
+# pycyber translation
+# Language: Brazilian Portuguese
+# Author: Paulo Matias
+
+msgid "End"
+msgstr "Fim"
+
+msgid "No results found."
+msgstr "Nenhum resultado encontrado"
+
+msgid "bigger costumers"
+msgstr "maiores clientes"
+
+msgid "Total Use"
+msgstr "Uso Total"
+
+msgid "The total service use counter was reset for all costumers successfuly."
+msgstr "O contador de uso total foi zerado para todos os clientes com sucesso."
+
+msgid "Start"
+msgstr "Início"
+
+msgid "Add"
+msgstr "Adicionar"
+
+msgid "query by id"
+msgstr "consultar por id"
+
+msgid "Hour price"
+msgstr "Preço da hora"
+
+msgid "add pc"
+msgstr "adicionar pc"
+
+msgid "Finish"
+msgstr "Terminar"
+
+msgid "Computers in the network"
+msgstr "Computadores na rede"
+
+msgid "Number of results"
+msgstr "Número de resultados"
+
+msgid "Price"
+msgstr "Preço"
+
+msgid "Costumer"
+msgstr "Cliente"
+
+msgid "Shutdown of <b>%s</b> was requested since <b>%s</b>, but it is still on. Please turn it off manually."
+msgstr "O desligamento de <b>%s</b> foi pedido desde <b>%s</b>, mas ele ainda está ligado. Por favor, desligue manualmente."
+
+msgid "add"
+msgstr "adicionar"
+
+msgid "Birthday"
+msgstr "Aniversário"
+
+msgid "User"
+msgstr "Usuário"
+
+msgid "costumers"
+msgstr "clientes"
+
+msgid "Address"
+msgstr "Endereço"
+
+msgid "User Code"
+msgstr "Usuário"
+
+msgid "Please, type the costumer code."
+msgstr "Por favor, digite o código do cliente."
+
+msgid "Initial credit"
+msgstr "Crédito inicial"
+
+msgid "Change"
+msgstr "Mudar"
+
+msgid "Name"
+msgstr "Nome"
+
+msgid "query by name"
+msgstr "consultar por nome"
+
+msgid "Remove"
+msgstr "Remover"
+
+msgid "Invalid number."
+msgstr "Número inválido."
+
+msgid "Credit"
+msgstr "Crédito"
+
+msgid "Code"
+msgstr "Código"
+
+msgid "reset counter"
+msgstr "zerar contador"
+
+msgid "Costumer information was successfuly updated."
+msgstr "A informação do cliente foi atualizada com sucesso."
+
+msgid "Couldn't send shutdown command to <b>%s</b>. Please check if the computer is on and if the network cable is correctly plugged."
+msgstr "Foi impossível mandar o comando de desligamento para <b>%s</b>. Por favor, verifique se o computador está ligado e se o cabo de rede está plugado corretamente."
+
+msgid "User code"
+msgstr "Código do usuário"
+
+msgid "configuration"
+msgstr "configuração"
+
+msgid "Please, type the number of costumers you want to display."
+msgstr "Por favor, digite o número de clientes que você quer exibir."
+
+msgid "Deduct"
+msgstr "Descontar"
+
+msgid "The user code is invalid."
+msgstr "O código de usuário é inválido."
+
+msgid "Invalid code."
+msgstr "Código inválido."
+
+msgid "Your costumer's code is"
+msgstr "O código do seu cliente é"
+
+msgid "Telephone"
+msgstr "Telefone"
+
+msgid "Computer"
+msgstr "Computador"
+
+msgid "Shutdown"
+msgstr "Desligar"
+
+msgid "Please, type the beginning of the name."
+msgstr "Por favor, digite o começo do nome."
+

@@ -1,0 +1,29 @@
+HOW TO INSTALL
+
+* Patch GRUB
+
+$ tar -zxf grub-0.96.tar.gz
+$ patch -p0 < grub-0.96-pycyber.diff 
+patching file grub-0.96/netboot/etherboot.h
+patching file grub-0.96/netboot/main.c
+patching file grub-0.96/stage2/builtins.c
+
+* Compile GRUB with ./configure && make
+
+See ./configure --help for enabling support for your NICs.
+
+* Install GRUB with make install
+
+* Copy /usr/local/lib/grub/i386-pc/* to /grub of the partition
+  which you will install GRUB.
+
+* Write a menu listing. Use the 'udpauth' command, provided by
+  the patch, for waiting for server authorization.
+
+* Call grub and type:
+
+root (hdX,Y)
+setup (hdX)
+
+Where hdX is the HD in whose MBR you will install GRUB, and hdX,Y
+is the partition where the files you copied to /grub are.
