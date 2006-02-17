@@ -99,8 +99,8 @@ static void gather_random()
     POINT point;
     GetCaretPos(&point);
     add_data(&point, sizeof (point));
-	  GetCursorPos(&point);
-	  add_data(&point, sizeof (point));
+    GetCursorPos(&point);
+    add_data(&point, sizeof (point));
   }
   {
     MEMORYSTATUS memoryStatus;
@@ -120,19 +120,11 @@ int main()
   HINSTANCE Kernel32 = LoadLibrary("KERNEL32.DLL");
   OSVERSIONINFO osvi;
 
-	osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
-	GetVersionEx(&osvi);
+  osvi.dwOSVersionInfoSize = sizeof(OSVERSIONINFO);
+  GetVersionEx(&osvi);
   
-  if(osvi.dwPlatformId == VER_PLATFORM_WIN32_NT)
+  if(osvi.dwPlatformId != VER_PLATFORM_WIN32_NT)
   {
-    int (_cdecl *pfnHook)(DWORD);
-		HINSTANCE HookNTQSI= LoadLibrary("HookNTQSI.dll");
-		if(HookNTQSI)
-		{
-			pfnHook = (int(*)(DWORD))GetProcAddress(HookNTQSI,"Hook");
-			pfnHook(GetCurrentProcessId());
-		}
-  } else {
     RegisterServiceProcess = (REGSERVICEPROC)GetProcAddress(Kernel32, "RegisterServiceProcess");
     RegisterServiceProcess(0, 1);
   }

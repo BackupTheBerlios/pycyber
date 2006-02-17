@@ -1,6 +1,0 @@
-This code for hiding processes in Windows NT is by Sheng Jiang, and was
-been downloaded from: http://www.codeproject.com/system/preventclose.asp
-
-No copyright warnings. Seems to be of public domain.
-
-Unfortunately, this stuff only compiles in Visual C, generating a dll.
