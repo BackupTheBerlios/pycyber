@@ -14,7 +14,7 @@ import deathcheck
 import udpauth
 import pckiller
 
-gettext.bindtextdomain('pycyber', 'lang')
+gettext.bindtextdomain('pycyber', config.locale_dir)
 gettext.textdomain('pycyber')
 
 auth_last_try = { }

@@ -37,3 +37,7 @@ refresh_time = 10
 
 # Writable dir for storing internal config files.
 config_dir = '/var/pycyber'
+
+# Directory containing language localization.
+locale_dir = '/usr/share/locale'
+
